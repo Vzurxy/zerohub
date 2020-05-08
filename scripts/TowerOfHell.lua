@@ -342,12 +342,12 @@ Commands = {
                 end
             },
 	          {
-                Name = "revert"
-                Description = "Reverts a modifier."
+                Name = "revert",
+                Description = "Reverts a modifier.",
                 Aliases = {},
                 Args = {
                     {
-                        Name = "Revert"
+                        Name = "Revert",
                         Description = "The name of the modifier to revert (CLIENT). (gravity, negative, speed, fog, bunny, invincibility, checkpoints)",
                         Type = "string",
                     }
@@ -367,7 +367,7 @@ Commands = {
                 Aliases = {},
                 Args = {},
                 Run = function(args)
-                  Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").tower.sections.finish.exit.carpet.CFrame
+                  Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").tower.sections.finish.exit.carpet.CFrame + Vector3.new(0, 3, 0)
                 end
             }
         } -- End of Commands (easier to track)
