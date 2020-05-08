@@ -730,7 +730,9 @@ Mouse.Button1Up:Connect(function()
     MouseDown = false
 end)
 
-Log("ZeroHub Command Line - Successfully loaded! (" .. tostring(tick() - StartTick) .. " seconds)", true)
+local TimeTook = ("(%.2f seconds)"):format(tostring(tick() - StartTick))
+
+Log("ZeroHub Command Line - Successfully loaded! (" .. TimeTook .. " seconds)", true)
 Log("", true)
 
 NewCommandSet(Commands)
