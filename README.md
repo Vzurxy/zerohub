@@ -7,10 +7,13 @@ Here is the process of what you should expect when you run Zero Hub.
 1. Checking for valid game
 2. Checking if the valid game is not updated, and is concurrent with the current script version.
 3. Asks the user whether they would like to run the script anyways, (***RISK***), or cancel.
+4. If the game version is up to date with script version, no extra options will be needed.
 
 Loader Code:
 
-`loadstring(game:HttpGet("https://raw.githubusercontent.com/Vzurxy/zerohub/master/loader.lua"))()`
+```lua
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Vzurxy/zerohub/master/loader.lua"))()
+```
 
 Things to note:
 
