@@ -935,6 +935,10 @@ local GUIData = (function()
 	end)
 	
 	Mods.Text = "ZeroHub " .. _V
+		
+	game.Close:Connect(function()
+		Save()
+	end)
 	
 	return {gui, saveData, screenGui, Save}
 end)()
@@ -955,6 +959,21 @@ local Save = GUIData[4]
 local screenscale = 250
 local opacity = 0
 local backcolor = Color3.fromRGB(35, 35, 36)
+
+-- Saving
+
+local readfile = readfile or function() end
+pcall(function()
+	local JSONData = readfile("ZeroHub.txt")
+	if JSONData then
+		local LUAData = HttpService:JSONDecode(JSONData)
+		saveData.Options = LUAData.Options
+		saveData.Hotkeys = LUAData.Hotkeys
+		print("Save data found for place: " .. tostring(game.PlaceId))
+	else
+		print("Save data not found for place: " .. tostring(game.PlaceId))
+	end
+end)
 
 --// UI Functionality
 RunService.RenderStepped:Connect(function()
