@@ -290,7 +290,10 @@ Commands = {
                 Args = {},
                 Run = function(args)
                    Log([[
-                   
+                   	acbypass - bypass anticheat
+			modifier <(string) modifier name> - runs modifier
+			revert <(string) modifier name> - reverts modifier
+			win - teleports you to red carpet
                    ]], true)
                 end
             },
