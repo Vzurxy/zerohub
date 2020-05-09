@@ -1,3 +1,5 @@
+-- All credits go to littensy, ceg ported.
+
 local StartTick = tick()
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
