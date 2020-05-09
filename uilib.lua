@@ -8,7 +8,7 @@ local GUIData = (function()
 	-- Variables
 	local _V = 1
 	
-	local screenGui = (script:FindFirstChild("ScreenGui")) or game:GetObjects("rbxassetid://2718157603")[1]:FindFirstChild("ScreenGui", true)
+	local screenGui = (script:FindFirstChild("ScreenGui")) or game:GetObjects("rbxassetid://5008638527")[1]:FindFirstChild("ScreenGui", true)
 	local Container = screenGui.Frame
 	local Opt = Container.OptionsFrame
 	local Checkbox = Opt.Checkbox
@@ -18,6 +18,7 @@ local GUIData = (function()
 	local Mode = Opt.Mode
 	local Number = Opt.Number
 	local Toggle = Opt.Toggle
+	local Text = Opt.Text
 	local Mods = screenGui.Mods
 	local ModLabel = Mods.Example
 	
@@ -28,7 +29,7 @@ local GUIData = (function()
 	local Mouse = Player:GetMouse()
 	
 	pcall(function()
-		screenGui.Parent = game:GetService("CoreGui").RobloxGui
+		screenGui.Parent = game:GetService("CoreGui"):FindFirstChild("RobloxGui")
 	end)
 	
 	Container.Parent = nil
@@ -38,6 +39,7 @@ local GUIData = (function()
 	Execute.Parent = nil
 	Mode.Parent = nil
 	Number.Parent = nil
+	Text.Parent = nil
 	Toggle.Parent = nil
 	ModLabel.Parent = nil
 	
@@ -219,6 +221,8 @@ local GUIData = (function()
 			return data == 1 and true or false
 		elseif type == "Color3" then
 			return Color3.new(data[1], data[2], data[3])
+		elseif type == "string" then
+			return tostring(data[1])
 		end
 		return data
 	end
@@ -613,6 +617,41 @@ local GUIData = (function()
 		return guiObject
 	end
 	
+	function lib.Text(data, dataArray)
+		local guiObject = Text:Clone()
+		local Opaque = guiObject.String:GetChildren()[1]
+		local guiData = {}
+		
+		guiObject.String.PlaceholderText = data.Placeholder
+		Opaque.PlaceholderText = data.Placeholder
+		
+		if data.ClearTextOnClick then
+			guiObject.String.ClearTextOnFocus = true
+		else
+			guiObject.String.ClearTextOnFocus = false
+		end
+		
+		guiObject.String:GetPropertyChangedSignal("Text"):Connect(function()
+			Opaque.Text = guiObject.String.Text
+		end)
+		
+		guiObject.String.FocusLost:Connect(function(Enter)
+			if Enter then
+				data.Callback(guiObject.String.Text)
+			end
+		end)
+		
+		guiData.ySize = 0
+		guiData.Open = false
+		guiData.baseColor = colors.TextEnabled
+		
+		gui:createList(guiObject, guiData)
+		gui:setText(guiObject.Label, data.Name)
+		gui:textColorOnHover(guiObject.Label, guiData)
+		
+		return guiObject
+	end
+	
 	function lib.Execute(data, dataArray)
 		local guiObject = Execute:Clone()
 		local guiData = {}
@@ -633,7 +672,6 @@ local GUIData = (function()
 		
 		guiObject.Indicator.MouseButton1Down:Connect(newValue)
 		guiObject.Label.MouseButton1Down:Connect(newValue)
-		--newValue(true)
 		
 		guiData.ySize = 0
 		guiData.Open = false
@@ -709,7 +747,7 @@ local GUIData = (function()
 			end
 			
 			saveData.Hotkeys[data.ID] = tostring(lastInput)
-			hotkeyFunctions[data.ID] = data.callback
+			hotkeyFunctions[data.ID] = data.Callback
 			
 			hotkeyInput = tostring(lastInput)
 			saveData.Options[data.ID].Value = hotkeyInput
@@ -849,7 +887,7 @@ local GUIData = (function()
 		return guiObject
 	end
 	
-	function lib.Frame(data, dataArray)
+	function lib.Label(data, dataArray)
 		local guiObject = Frame:Clone()
 		
 		local guiData = {}
