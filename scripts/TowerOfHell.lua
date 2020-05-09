@@ -326,7 +326,7 @@ Commands = {
             },
             {
                 Name = "modifier",
-                Description = "Lists available commands to use.",
+                Description = "Runs a modifier.",
                 Aliases = {},
                 Args = {
                     {
