@@ -48,10 +48,10 @@ local GUIData = (function()
 	local gui = {}
 	
 	-- Save Functions
-	local writefile = writefile or function() end
+	local writefile = writefile or function() warn("Your exploit doesn't support saving.") end
 	local function Save()
 		local JSONData = HttpService:JSONEncode(saveData)
-		writefile("ZeroHub.txt", JSONData)
+		writefile("ZeroHub_" .. tostring(game.PlaceId) .. ".txt", JSONData)
 	end
 	
 	-- Color Functions
@@ -156,11 +156,13 @@ local GUIData = (function()
 	-- UI Functions
 	function gui.tween(object,style,direction,t,goal)
 	    local tweenservice = game:GetService("TweenService")
-	    local tweenInfo = TweenInfo.new(t,Enum.EasingStyle[style],Enum.EasingDirection[direction])
-	    local tween = tweenservice:Create(object,tweenInfo,goal)
-		tween.Completed:Connect(function()
-			tween:Destroy()
-		end)
+	    local tweenInfo = TweenInfo.new(t, Enum.EasingStyle[style], Enum.EasingDirection[direction])
+	    local tween = tweenservice:Create(object, tweenInfo, goal)
+	    
+	    tween.Completed:Connect(function()
+		tween:Destroy()
+	    end)
+			
 	    tween:Play()
 	    return tween
 	end
@@ -271,6 +273,7 @@ local GUIData = (function()
 	function gui:createList(guiObject, guiData)
 		local ListLayout = guiObject.OptionsFrame.UIListLayout
 		local Padding = guiObject.OptionsFrame.UIPadding
+			
 		guiObject.OptionsFrame.UIListLayout.Changed:Connect(function(Property)
 			if Property == "AbsoluteContentSize" then
 				guiData.ySize = ListLayout.AbsoluteContentSize.Y + 2 + Padding.PaddingTop.Offset + ListLayout.Padding.Offset * 2
@@ -443,12 +446,14 @@ local GUIData = (function()
 					refresh()
 				end
 			end)
+				
 			obj.InputEnded:Connect(function(input)
 				if input.UserInputType == Enum.UserInputType.MouseButton1 then
 					inputDown = false
 					refresh()
 				end
 			end)
+				
 			obj.InputChanged:Connect(function(input)
 				if input == nil or input.UserInputType == Enum.UserInputType.MouseMovement then
 					if inputDown then
@@ -579,6 +584,7 @@ local GUIData = (function()
 		
 		local newValue = function(delta)
 			local exactValue = data.Min + (data.Max - data.Min) * delta
+				
 			Value = math.floor(exactValue / data.Round) * data.Round
 			Value = math.clamp(Value, data.Min, data.Max)
 			guiObject.Indicator.Value.Text = tostring(Value)
@@ -870,6 +876,7 @@ local GUIData = (function()
 		gui:textColorOnHover(guiObject.Title, guiData)
 		gui:createList(guiObject, guiData)
 		gui:setText(guiObject.Title, data.Name)
+			
 		gui:makeDraggable(guiObject, function(x, y)
 			guiData.yPos = y
 			saveData.Options[data.ID].Position = gui:pack(guiObject.Position)
