@@ -985,7 +985,13 @@ local GUIData = (function()
 		Save()
 	end)
 	
-	return {gui, saveData, screenGui, Save}
+	return {
+			gui,
+			saveData,
+			screenGui,
+			Save,
+			color,
+	}
 end)()
 
 --// Variables
@@ -1000,6 +1006,7 @@ local gui = GUIData[1]
 local saveData = GUIData[2]
 local screenGui = GUIData[3]
 local Save = GUIData[4]
+local color = GUIData[5]
 
 local screenscale = 250
 local opacity = 0
@@ -1035,4 +1042,10 @@ RunService.RenderStepped:Connect(function()
 	end
 end)
 
-return {gui, saveData, screenGui, Save}
+return {
+	UI = gui,
+	Data = saveData,
+	Gui = screenGui,
+	Save = Save,
+	Color = color
+}
