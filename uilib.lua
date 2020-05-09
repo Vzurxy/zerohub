@@ -4,6 +4,10 @@ end
 
 --// API References
 
+local screenscale = 250
+local opacity = 0
+local backcolor = Color3.fromRGB(35, 35, 36)
+
 local GUIData = (function()
 	-- Variables
 	local _V = 1
@@ -984,6 +988,34 @@ local GUIData = (function()
 	game.Close:Connect(function()
 		Save()
 	end)
+
+	local Theme = {}
+
+	function Theme:SetColor(Color)
+		backcolor = Color
+	end
+
+	function Theme:SetMenuOpacity(Number)
+		opacity = 0 + Number
+	end
+
+	function Theme:SetImage(Asset)
+		for _, frame in pairs(screenGui:GetDescendants()) do
+			if frame:IsA("Frame") and frame.Name == "OptionsFrame" then
+				local Image = Instance.new("ImageLabel")
+				Image.ZIndex = 0
+				Image.Image = Asset
+				Image.Size = UDim2.new(1, 0, 1, 0)
+				Image.Parent = Frame
+			end
+		end
+	end
+		
+
+	screenscale = 250
+	opacity = 0
+	backcolor = Color3.fromRGB(35, 35, 36)
+		
 	
 	return {
 			gui,
@@ -991,6 +1023,7 @@ local GUIData = (function()
 			screenGui,
 			Save,
 			color,
+			Theme
 	}
 end)()
 
@@ -1007,10 +1040,7 @@ local saveData = GUIData[2]
 local screenGui = GUIData[3]
 local Save = GUIData[4]
 local color = GUIData[5]
-
-local screenscale = 250
-local opacity = 0
-local backcolor = Color3.fromRGB(35, 35, 36)
+local Theme = GUIData[6]
 
 -- Saving
 
@@ -1028,6 +1058,7 @@ pcall(function()
 end)
 
 --// UI Functionality
+
 RunService.RenderStepped:Connect(function()
 	for _, frame in pairs(screenGui:GetChildren()) do
 		if frame:IsA("Frame") then
@@ -1047,5 +1078,6 @@ return {
 	Data = saveData,
 	Gui = screenGui,
 	Save = Save,
-	Color = color
+	Color = color,
+	Theme = Theme
 }
