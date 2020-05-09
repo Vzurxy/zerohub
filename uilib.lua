@@ -28,7 +28,7 @@ local GUIData = (function()
 	local Mouse = Player:GetMouse()
 	
 	pcall(function()
-		screenGui.Parent = game:GetService("Players").LocalPlayer.PlayerGui
+		screenGui.Parent = game:GetService("CoreGui").RobloxGui
 	end)
 	
 	Container.Parent = nil
