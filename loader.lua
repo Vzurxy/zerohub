@@ -1,6 +1,6 @@
 --[[
   @author: ceg#0550
-  @updated: 5/8/2020 2:12 PM
+  @updated: 5/8/2020 8:08 PM
   @description: Main loader for zero-hub.
 ]]--
 
@@ -8,7 +8,7 @@ local BASE_URL = "https://raw.githubusercontent.com/Vzurxy/zerohub/master/"
 local MarketplaceService = game:GetService("MarketplaceService")
 local StarterGui = game:GetService("StarterGui")
 
-local PlaceId = game.PlaceId
+local PlaceId = tostring(game.PlaceId)
 local Games = loadstring(game:HttpGet(BASE_URL .. "/data/games.lua"))()
 
 local Game = Games[PlaceId]
