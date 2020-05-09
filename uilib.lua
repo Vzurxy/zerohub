@@ -928,7 +928,50 @@ local GUIData = (function()
 	end
 	
 	-- UI Creation Library
-	function gui.create(self, guiType, data)
+	function gui:Create(self, guiType, data)
+		if self == gui then
+			self = settingsArray
+		end
+		
+		data.ID = data.Name .. "_" .. (self[1].Name or "TOP")
+		
+		if not saveData.Options[data.ID] then
+			saveData.Options[data.ID] = {}
+		end
+		
+		if self[1].Object:FindFirstChild("Dropdown") then
+			self[1].Object.Dropdown.Visible = true
+		end
+		
+		local dataArray = {}
+		local objectArray = {}
+		local selfArray = {dataArray, objectArray, create = gui.create, callback = data.Callback}
+		selfArray.__index = selfArray
+
+		dataArray.Name = data.Name
+		dataArray.Data = data
+		dataArray.Object = lib[guiType](data, dataArray)
+		dataArray.create = selfArray.create
+
+		setmetatable(dataArray, selfArray)
+		
+		if guiType == "Toggle" then
+			lib.Hotkey(data, dataArray)
+		end
+		if data.Hint then
+			local Object = dataArray.Object
+			gui:addHint(Object:FindFirstChild("Title") or Object:FindFirstChild("Label"), data.Hint)
+		end
+		
+		self[1][data.Name] = selfArray
+		self[2][data.Name] = dataArray.Object
+		
+		dataArray.Object.Parent = self[1].Object:FindFirstChild("OptionsFrame") or self[1].Object
+		
+		return dataArray
+	end
+		
+	function gui:create(self, guiType, data)
 		if self == gui then
 			self = settingsArray
 		end
