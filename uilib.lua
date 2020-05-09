@@ -633,7 +633,7 @@ local GUIData = (function()
 		
 		guiObject.Indicator.MouseButton1Down:Connect(newValue)
 		guiObject.Label.MouseButton1Down:Connect(newValue)
-		newValue(true)
+		--newValue(true)
 		
 		guiData.ySize = 0
 		guiData.Open = false
