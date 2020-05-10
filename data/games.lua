@@ -13,4 +13,7 @@ return {
         Timestamp = "2020-05-08T14:02:32.9696902Z",
         Script = GetScript("TowerOfHell")
   }
+  ["Universal"] = {
+    Script = GetScript("Universal")
+   }
 }
