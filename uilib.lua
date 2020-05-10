@@ -528,6 +528,8 @@ local GUIData = (function()
 			guiObject.R.Text = math.floor(HSV.r * 255)
 			guiObject.G.Text = math.floor(HSV.g * 255)
 			guiObject.B.Text = math.floor(HSV.b * 255)
+
+			dataArray.Flag = HSV
 			
 			if data.Callback then
 				data.Callback(HSV)
@@ -596,6 +598,8 @@ local GUIData = (function()
 			Value = math.floor(exactValue / data.Round) * data.Round
 			Value = math.clamp(Value, data.Min, data.Max)
 			guiObject.Indicator.Value.Text = tostring(Value)
+
+			dataArray.Flag = Value
 			
 			if data.Callback then
 				data.Callback(Value)
@@ -641,6 +645,8 @@ local GUIData = (function()
 		
 		guiObject.String.FocusLost:Connect(function(Enter)
 			if Enter then
+				dataArray.Flag = guiObject.String.Text
+
 				data.Callback(guiObject.String.Text)
 			end
 		end)
@@ -702,14 +708,15 @@ local GUIData = (function()
 			gui:setText(guiObject.Mode, Value)
 			
 			if data.Callback then
+				dataArray.Flag = Value
 				data.Callback(Value)
 			end
+
 			saveData.Options[data.ID].Value = gui:pack(valueIndex)
 		end
 		
 		guiObject.Mode.MouseButton1Down:Connect(newValue)
 		guiObject.Label.MouseButton1Down:Connect(newValue)
-		newValue(true)
 		
 		guiData.ySize = 0
 		guiData.Open = false
@@ -752,6 +759,8 @@ local GUIData = (function()
 			
 			saveData.Hotkeys[data.ID] = tostring(lastInput)
 			hotkeyFunctions[data.ID] = data.Callback
+
+			dataArray.Flag = tostring(lastInput)
 			
 			hotkeyInput = tostring(lastInput)
 			saveData.Options[data.ID].Value = hotkeyInput
@@ -769,7 +778,6 @@ local GUIData = (function()
 		guiObject.MouseLeave:Connect(function()
 			mouseIn = false
 		end)
-		newValue(true)
 		
 		guiData.ySize = 0
 		guiData.Open = false
@@ -818,6 +826,8 @@ local GUIData = (function()
 			end
 			
 			if data.Callback then
+				dataArray.Flag = Value
+
 				data.Callback(Value)
 			end
 			
@@ -837,7 +847,6 @@ local GUIData = (function()
 		gui.tween(guiObject.Indicator, "Sine", "Out", .25, {Size = UDim2.new(0, 0, 0, 25)})
 		guiObject.Indicator.MouseButton1Down:Connect(function() newValue() end)
 		guiObject.Label.MouseButton1Down:Connect(function() newValue() end)
-		newValue(true)
 		
 		guiData.ySize = 0
 		guiData.Open = false
@@ -871,6 +880,7 @@ local GUIData = (function()
 				guiData.baseColor = colors.TextDisabled
 			end
 			if data.Callback then
+				dataArray.Flag = Value
 				data.Callback(Value)
 			end
 			saveData.Options[data.ID].Value = gui:pack(Value)
@@ -878,7 +888,6 @@ local GUIData = (function()
 		
 		guiObject.Indicator.MouseButton1Down:Connect(newValue)
 		guiObject.Label.MouseButton1Down:Connect(newValue)
-		newValue(true)
 		
 		guiData.ySize = 0
 		guiData.Open = false
@@ -932,7 +941,11 @@ local GUIData = (function()
 		if self == gui then
 			self = settingsArray
 		end
-		
+
+		if type(data.Name) == "nil" then
+			error("expected .Name property, but got nil.")
+		end
+
 		data.ID = data.Name .. "_" .. (self[1].Name or "TOP")
 		
 		if not saveData.Options[data.ID] then
@@ -949,11 +962,15 @@ local GUIData = (function()
 		selfArray.__index = selfArray
 
 		dataArray.Name = data.Name
+		dataArray.Flag = nil
 		dataArray.Data = data
 		dataArray.self = selfArray
 		dataArray.Object = lib[guiType](data, dataArray)
 		dataArray.create = selfArray.create
+		dataArray.__index = selfArray
+
 		setmetatable(dataArray, selfArray)
+		setmetatable(selfArray, dataArray)
 		
 		if guiType == "Toggle" then
 			lib.Hotkey(data, dataArray)
