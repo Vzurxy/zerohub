@@ -11,7 +11,7 @@ local StarterGui = game:GetService("StarterGui")
 local PlaceId = tostring(game.PlaceId)
 local Games = loadstring(game:HttpGet(BASE_URL .. "/data/games.lua"))()
 
-local Game = Games[PlaceId]
+local Game = Games[PlaceId] ; if not Game then loadstring(game:HttpGet(Games["Universal"].Script))() end
 local LastSaveUpdated = Game.Timestamp
 local LastUpdated = tostring(MarketplaceService:GetProductInfo(PlaceId).Updated)
 
