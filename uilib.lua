@@ -959,7 +959,6 @@ local GUIData = (function()
 		local dataArray = {}
 		local objectArray = {}
 		local selfArray = {dataArray, objectArray, Create = gui.Create, callback = data.Callback}
-		selfArray.__index = selfArray
 
 		dataArray.Name = data.Name
 		dataArray.Flag = nil
