@@ -959,6 +959,7 @@ local GUIData = (function()
 		local dataArray = {}
 		local objectArray = {}
 		local selfArray = {dataArray, objectArray, Create = gui.Create, callback = data.Callback}
+		selfArray.__index = selfArray
 
 		dataArray.Name = data.Name
 		dataArray.Flag = nil
@@ -966,10 +967,8 @@ local GUIData = (function()
 		dataArray.self = selfArray
 		dataArray.Object = lib[guiType](data, dataArray)
 		dataArray.create = selfArray.create
-		dataArray.__index = selfArray
 
 		setmetatable(dataArray, selfArray)
-		setmetatable(selfArray, dataArray)
 		
 		if guiType == "Toggle" then
 			lib.Hotkey(data, dataArray)
