@@ -34,6 +34,9 @@ local GUIData = (function()
 	
 	pcall(function()
 		screenGui.Parent = game:GetService("CoreGui"):FindFirstChild("RobloxGui")
+		if syn then
+		    syn.protect_gui(screenGui)
+		end
 	end)
 	
 	Container.Parent = nil
