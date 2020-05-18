@@ -22,7 +22,7 @@ BindWarning.OnInvoke = function(Option)
     if Option == "Run" then
         WarningAccepted = true
     elseif Option == "Cancel" then
-        WarningAccepted = true
+        WarningAccepted = false
     end
 end
 
