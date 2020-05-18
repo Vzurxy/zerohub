@@ -6,11 +6,11 @@ local Save = UILibrary.Save
 local Color = UILibrary.Color
 local Theme = UILibrary.Theme
 
-local ZeroHub = Library:create("Container" , {
+local ZeroHub = Library:Create("Container" , {
 	Name = "Zero Hub"
 })
 
-ZeroHub.self:create("Execute", {
+ZeroHub:Create("Execute", {
 	Name = "Bypass",
 	Callback = function()
 	        local Environment = getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.LocalScript)
@@ -35,7 +35,7 @@ ZeroHub.self:create("Execute", {
 	end
 })
 
-ZeroHub.self:create("Text", {
+ZeroHub:Create("Text", {
 	Name = "Modifier",
 	Placeholder = "nil",
 	ClearTextOnClick = true,
@@ -49,7 +49,7 @@ ZeroHub.self:create("Text", {
 	end
 })
 
-ZeroHub.self:create("Text", {
+ZeroHub:Create("Text", {
 	Name = "Revert",
 	Placeholder = "nil",
 	ClearTextOnClick = true,
@@ -63,7 +63,7 @@ ZeroHub.self:create("Text", {
 	end
 })
 
-ZeroHub.self:create("Execute", {
+ZeroHub:Create("Execute", {
 	Name = "Win",
 	Callback = function()
 		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").tower.sections.finish.exit.carpet.CFrame + Vector3.new(0, 3, 0)
