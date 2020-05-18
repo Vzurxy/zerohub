@@ -30,7 +30,7 @@ if LastSaveUpdated ~= LastUpdated then
     StarterGui:SetCore("SendNotification", {
         Title = "[WARNING]",
         Text = "This game has updated recently, and scripts may be patched.",
-        Icon = "rbxassetid://5003495802",
+        Icon = "rbxassetid://5003495787",
         Duration = math.huge,
         Callback = BindWarning,
         Button1 = "Run",
