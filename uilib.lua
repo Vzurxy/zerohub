@@ -889,6 +889,7 @@ local GUIData = (function()
 			saveData.Options[data.ID].Value = gui:pack(Value)
 		end
 		
+		guiObject.Indicator.Size = UDim2.new(0, (data.Default and 35 or 0), 0 ,35)
 		guiObject.Indicator.MouseButton1Down:Connect(newValue)
 		guiObject.Label.MouseButton1Down:Connect(newValue)
 		
