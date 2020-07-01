@@ -42,9 +42,9 @@ if LastSaveUpdated ~= LastUpdated then
     if WarningAccepted then
         loadstring(game:HttpGet(Game.Script))()
     else
-        warn("User has cancelled the action.")
+        warn("[ZEROHUB] CANCEL")
     end
 elseif LastSaveUpdated == LastUpdated then
     loadstring(game:HttpGet(Game.Script))()
-    warn("User has ran the loader and accepted.")
+    warn("[ZEROHUB] RAN")
 end
