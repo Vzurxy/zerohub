@@ -15,16 +15,16 @@ local Game = Games[PlaceId] ; if not Game then loadstring(game:HttpGet(Games["Un
 local LastSaveUpdated = Game.Timestamp
 local LastUpdated = tostring(MarketplaceService:GetProductInfo(PlaceId).Updated)
 
-local BindWarning = Instance.new("BindableFunction")
+local BindWarning = Instance.new("BindableEvent")
 local WarningAccepted = nil
 
-BindWarning.OnInvoke = function(Option)
+BindWarning.Event:Connect(function(Option)
     if Option == "Run" then
         WarningAccepted = true
     elseif Option == "Cancel" then
         WarningAccepted = false
     end
-end
+end)
 
 if LastSaveUpdated ~= LastUpdated then
     StarterGui:SetCore("SendNotification", {
@@ -36,8 +36,8 @@ if LastSaveUpdated ~= LastUpdated then
         Button1 = "Run",
         Button2 = "Cancel"
     })
-
-    repeat wait(0.1) until WarningAccepted ~= nil
+  
+    BindWarning.Event:Wait()
 
     if WarningAccepted then
         loadstring(game:HttpGet(Game.Script))()
