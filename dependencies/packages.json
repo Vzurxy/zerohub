@@ -1,3 +1,6 @@
 {
-    "testing" : "https://raw.githubusercontent.com/Vzurxy/zerohub/master/dependencies/testing.lua"
+    "testing" : {
+        url :"https://raw.githubusercontent.com/Vzurxy/zerohub/master/dependencies/testing.lua",
+        version : 1.0,
+    }
 }
