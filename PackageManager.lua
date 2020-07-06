@@ -5,6 +5,7 @@ assert(newcclosure);
 assert(loadfile);
 assert(loadstring);
 assert(game.HttpGet);
+assert(getgenv)
 --Variables.
 local http = game:GetService("HttpService");
 local dependency_folder = "dependencies/";
