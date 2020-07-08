@@ -1,7 +1,7 @@
 {
     "testing" : {
         "url" :"https://raw.githubusercontent.com/Vzurxy/zerohub/master/dependencies/testing.lua",
-        "run_once" : false,
+        "run_once" : true,
         "version" : 1.0
     }
 }
