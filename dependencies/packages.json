@@ -3,5 +3,10 @@
         "url" :"https://raw.githubusercontent.com/Vzurxy/zerohub/master/dependencies/testing.lua",
         "run_once" : true,
         "version" : 1.0
+    },
+    "MetatableHooking" {
+        "url" : "https://raw.githubusercontent.com/Vzurxy/zerohub/master/dependencies/MetatableHooking.lua",
+        "run_once" : true,
+        "version" : 1.0
     }
 }
