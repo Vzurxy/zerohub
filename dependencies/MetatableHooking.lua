@@ -14,7 +14,7 @@ function package.indexhook(object, callback)
 end;
 
 function package.newindexhook(object, callback)
-    if index_list[object] then
+    if newindex_list[object] then
         error("Same object hooked by multiple functions!");
     end;
     newindex_list[object] = callback;
