@@ -8,21 +8,21 @@ local namecall_list = {};
 
 function package.indexhook(object, callback)
     if index_list[object] then
-        error("Same object hooked by multiple functions!");
+        warn("Same object hooked by multiple functions, overriding the previous function! (index)");
     end
     index_list[object] = callback;
 end;
 
 function package.newindexhook(object, callback)
     if newindex_list[object] then
-        error("Same object hooked by multiple functions!");
+        warn("Same object hooked by multiple functions, overriding the previous function! (newindex)");
     end;
     newindex_list[object] = callback;
 end;
 
 function package.namecallhook(method, callback)
     if namecall_list[method] then
-        error("Same method hooked by multiple functions!");
+        warn("Same method hooked by multiple functions, overriding the previous function! (namecall)");
     end;
     namecall_list[method] = callback;
 end;
