@@ -1,11 +1,10 @@
 --Assert checks.
-assert(isfolder);
-assert(listfiles);
-assert(newcclosure);
-assert(loadfile);
-assert(loadstring);
-assert(game.HttpGet);
-assert(getgenv)
+assert(isfolder,"Your exploit doesn't support needed functions.");
+assert(listfiles,"Your exploit doesn't support needed functions.");
+assert(loadfile,"Your exploit doesn't support needed functions.");
+assert(loadstring,"Your exploit doesn't support needed functions.");
+assert(game.HttpGet,"Your exploit doesn't support needed functions.");
+assert(getgenv,"Your exploit doesn't support needed functions.");
 --Variables.
 local http = game:GetService("HttpService");
 local dependency_folder = "dependencies/";
@@ -40,7 +39,7 @@ if isfolder(dependency_folder) then
                 end;
             elseif package then --Checks if its .lua file.
                 --Recording the package version to the local packages.json file.
-                local_packages[package] = {version = 1.0};
+                local_packages[package] = {version = 1.0, run_once = false};
             end;
         end;
     end;
@@ -65,9 +64,17 @@ getgenv().import = function(package) --Can't wrap it in a c closure.
     --If the function has already been loaded, calls the function in memory.
     if type(packages[package]) == "function" then
         return packages[package]()
+    --Run once package.
+    elseif type(packages[package]) == "table" not packages[package].url then
+        return packages[package]
     elseif local_packages[package] then --If the file is already locally stored, loads the file from local storage.
         if not isfile(dependency_folder..package..".lua") then error("File in local storage was deleted.") end
         packages[package] = loadfile(dependency_folder..package..".lua")
+        --Run once stuff.
+        if local_packages[package].run_once then
+            packages[package] = packages[package]()
+            return packages[package]
+        end
         return packages[package]()
     else --Loads the package from the interwebs.
         --Error hnadling.
@@ -76,11 +83,16 @@ getgenv().import = function(package) --Can't wrap it in a c closure.
         --Refresing the packages.json file. 
         fetch_packages()
         --Adding the package version to the local package.json file.
-        local_packages[package] = {version = packages[package].version}
+        local_packages[package] = {version = packages[package].version, run_once = packages[package].run_once}
         --Saving the package.
         writefile(dependency_folder..package..".lua", ret)
         --Updating the local packages.json file.
         writefile(dependency_folder..packages_json, http:JSONEncode(local_packages))
+        --Run once stuff.
+        if packages[package].run_once then
+            packages[package] = loadstring(ret)()
+            return packages[package]
+        end
         return loadstring(ret)()
     end
 end
